@@ -24,7 +24,7 @@ const RoomItem = () => {
             </p>
           </div>
           <div>
-            <div>
+            <div className="d-flex">
               <StarRatings
                 rating={5}
                 starRatedColor="#e61e4d"

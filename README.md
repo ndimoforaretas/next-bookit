@@ -6,3 +6,4 @@
 - Mongoose (https://www.npmjs.com/package/mongoose): To create models and connect to MongoDB
 - Bootstrap (https://getbootstrap.com/): To create responsive and mobile-first websites
 - React Star Ratings (https://www.npmjs.com/package/react-star-ratings): To create star rating component
+- React Hot Toast (https://www.npmjs.com/package/react-hot-toast): To create toast notifications
