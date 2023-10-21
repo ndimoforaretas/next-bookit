@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import Room from "../models/room";
+import Room, { IRoom } from "../models/room";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import ErrorHandler from "../utils/errorHandler";
+import APIFilters from "../utils/apiFilters";
 
 // Gets all rooms   =>   /api/rooms
 export const getAllRooms = catchAsyncErrors(async (req: NextRequest) => {
   const resPerPage: number = 8;
-  const rooms = await Room.find();
+  //const rooms = await Room.find();
+
+  const { searchParams } = new URL(req.url); // gets the search params from the url
+
+  const queryStr: any = {};
+
+  searchParams.forEach((value, key) => {
+    queryStr[key] = value;
+  }); // converts the search params to an object
+
+  const apiFilters = new APIFilters(Room, queryStr).search(); // creates a new instance of APIFilters and passes the Room model and the queryStr object
+
+  const rooms: IRoom[] = await apiFilters.query; // executes the query
 
   return NextResponse.json({
     success: true,
