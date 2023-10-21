@@ -50,3 +50,33 @@ export const getARoom = async (
     room,
   });
 };
+
+// Update room details   =>   /api/rooms/:id
+export const updateARoom = async (
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  let room = await Room.findById(params.id);
+  const body = await req.json();
+
+  if (!room) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Room not found with this ID",
+      },
+      {
+        status: 404,
+      }
+    );
+  }
+
+  room = await Room.findByIdAndUpdate(params.id, body, {
+    new: true,
+  });
+
+  return NextResponse.json({
+    success: true,
+    room,
+  });
+};
