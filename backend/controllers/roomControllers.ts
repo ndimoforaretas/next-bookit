@@ -32,24 +32,35 @@ export const getARoom = async (
   req: NextRequest,
   { params }: { params: { id: string } }
 ) => {
-  const room = await Room.findById(params.id);
+  try {
+    const room = await Room.findById(params.id);
 
-  if (!room) {
+    if (!room) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Room not found with this ID",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      room,
+    });
+  } catch (error: any) {
     return NextResponse.json(
       {
-        success: false,
-        message: "Room not found with this ID",
+        message: error.message,
       },
       {
-        status: 404,
+        status: 500,
       }
     );
   }
-
-  return NextResponse.json({
-    success: true,
-    room,
-  });
 };
 
 // Update room details   =>   /api/admin/rooms/:id
