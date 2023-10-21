@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Room from "../models/room";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
+import ErrorHandler from "../utils/errorHandler";
 
 // Gets all rooms   =>   /api/rooms
 export const getAllRooms = catchAsyncErrors(async (req: NextRequest) => {
@@ -34,15 +35,7 @@ export const getARoom = catchAsyncErrors(
     const room = await Room.findById(params.id);
 
     if (!room) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Room not found with this ID",
-        },
-        {
-          status: 404,
-        }
-      );
+      throw new ErrorHandler(404, "Room not found with this ID");
     }
 
     return NextResponse.json({
@@ -59,15 +52,7 @@ export const updateARoom = catchAsyncErrors(
     const body = await req.json();
 
     if (!room) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Room not found with this ID",
-        },
-        {
-          status: 404,
-        }
-      );
+      throw new ErrorHandler(404, "Room not found with this ID");
     }
 
     room = await Room.findByIdAndUpdate(params.id, body, {
@@ -88,15 +73,7 @@ export const deleteARoom = catchAsyncErrors(
     const room = await Room.findById(params.id);
 
     if (!room) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Room not found with this ID",
-        },
-        {
-          status: 404,
-        }
-      );
+      throw new ErrorHandler(404, "Room not found with this ID");
     }
 
     await room.deleteOne();
