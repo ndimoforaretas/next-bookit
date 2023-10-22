@@ -1,12 +1,18 @@
 import Home from "@/components/Home";
+import Error from "./error";
 
+export const dynamic = "force-dynamic";
 const getRooms = async () => {
-  const res = await fetch("http://localhost:3000/api/rooms");
+  const res = await fetch(`${process.env.API_URL}/api/rooms`);
   return res.json();
 };
 
 export default async function HomePage() {
-  const rooms = await getRooms();
+  const data = await getRooms();
 
-  return <Home />;
+  if (data?.errMessage) {
+    return <Error error={data} />;
+  }
+
+  return <Home data={data} />;
 }

@@ -306,6 +306,8 @@ nav {
 
 .card-img-top {
   border-radius: 0.8rem;
+  height: 100%;
+  width: 100%;
 }
 
 .ratings {
@@ -317,7 +319,7 @@ nav {
   font-size: 0.85rem;
   color: grey;
   margin-left: 0.5rem;
-  padding-top: 0.3rem;
+  padding-top: 0.4rem;
 }
 
 /* Room Details Page */

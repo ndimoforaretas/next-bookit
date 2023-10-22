@@ -52,7 +52,7 @@ export const getARoom = catchAsyncErrors(
     const room = await Room.findById(params.id);
 
     if (!room) {
-      throw new ErrorHandler(404, "Room not found with this ID");
+      throw new ErrorHandler(404, "Room not found");
     }
 
     return NextResponse.json({
