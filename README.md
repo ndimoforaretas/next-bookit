@@ -9,3 +9,4 @@
 - React Hot Toast (https://www.npmjs.com/package/react-hot-toast): To create toast notifications
 - React Bootstrap (https://react-bootstrap.github.io/): To create responsive and mobile-first components
 - React Pagination (https://www.npmjs.com/package/react-js-pagination): To create pagination
+- Bcrypt (https://www.npmjs.com/package/bcryptjs): To hash passwords
