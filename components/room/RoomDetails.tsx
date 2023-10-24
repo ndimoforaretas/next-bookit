@@ -22,7 +22,7 @@ const RoomDetails = ({ data }: Props) => {
       <h2 className="mt-5">{room.name}</h2>
       <p>{room.address}</p>
 
-      <div className="ratings mt-auto mb-3">
+      <div className="ratings mt-auto mb-3 d-flex align-items-center">
         <StarRatings
           rating={room?.ratings}
           starRatedColor="#e61e4d"
@@ -31,7 +31,7 @@ const RoomDetails = ({ data }: Props) => {
           starSpacing="1px"
           name="rating"
         />
-        <span className="no-of-reviews">{room?.numOfReviews} Reviews</span>
+        <span className="no-of-reviews fs-5">{room?.numOfReviews} Reviews</span>
       </div>
 
       <RoomImageSlider images={room?.images} />
