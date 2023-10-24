@@ -11,7 +11,7 @@ const RoomImageSlider = ({ images }: Props) => {
       {images?.length > 0 ? (
         images.map((image) => (
           <Carousel.Item key={image?.public_id}>
-            <div>
+            <div style={{ widows: "100%", height: "460px" }}>
               <Image
                 className="d-block m-auto"
                 src={image?.url}
