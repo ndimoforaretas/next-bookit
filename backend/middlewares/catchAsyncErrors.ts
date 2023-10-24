@@ -25,7 +25,7 @@ export const catchAsyncErrors =
 
       return NextResponse.json(
         {
-          errMessage: error.message,
+          message: error.message,
         },
         {
           status: error.statusCode || 500,
