@@ -6,15 +6,22 @@ export const metadata = {
   description: "Home page",
 };
 
-const getRooms = async () => {
-  const res = await fetch(`${process.env.API_URL}/api/rooms`);
+export const dynamic = "force-dynamic";
+const getRooms = async (searchParams: string) => {
+  const urlParams = new URLSearchParams(searchParams);
+  const queryString = urlParams.toString();
+  const res = await fetch(`${process.env.API_URL}/api/rooms?${queryString}`);
   return res.json();
 };
 
-export default async function HomePage() {
-  const data = await getRooms();
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: string;
+}) {
+  const data = await getRooms(searchParams);
 
-  if (data?.errMessage) {
+  if (data?.message) {
     return <Error error={data} />;
   }
 

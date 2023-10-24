@@ -6,7 +6,7 @@ import APIFilters from "../utils/apiFilters";
 
 // Gets all rooms   =>   /api/rooms
 export const getAllRooms = catchAsyncErrors(async (req: NextRequest) => {
-  const resPerPage: number = 8;
+  const resPerPage: number = 4;
   //const rooms = await Room.find();
 
   const { searchParams } = new URL(req.url); // gets the search params from the url
