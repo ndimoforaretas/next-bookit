@@ -10,11 +10,16 @@ const RoomFeatures = ({ room }: Props) => {
       <h3 className="mb-4">Features:</h3>
       <div className="room-feature">
         <i className="fa fa-cog fa-fw fa-users" aria-hidden="true"></i>
-        <p>{room?.guestCapacity}</p>
+        <p>
+          {room?.guestCapacity} {room?.guestCapacity === 1 ? "Guest" : "Guests"}
+        </p>
       </div>
       <div className="room-feature">
         <i className="fa fa-cog fa-fw fa-bed" aria-hidden="true"></i>
-        <p>{room?.numOfBeds}</p>
+        <p>
+          {room?.numOfBeds}
+          {room?.numOfBeds === 1 ? " Bed" : " Beds"}
+        </p>
       </div>
       <div className="room-feature">
         <i
