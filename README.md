@@ -10,3 +10,4 @@
 - React Bootstrap (https://react-bootstrap.github.io/): To create responsive and mobile-first components
 - React Pagination (https://www.npmjs.com/package/react-js-pagination): To create pagination
 - Bcrypt (https://www.npmjs.com/package/bcryptjs): To hash passwords
+- Redux toolkit (https://redux-toolkit.js.org/): To manage state

@@ -16,10 +16,6 @@ const CustomPagination = ({ resPerPage, filteredRoomsCount }: Props) => {
 
   let queryParams;
 
-  console.log("page", page);
-  console.log("resPerPage", resPerPage);
-  console.log("filteredRoomsCount", filteredRoomsCount);
-
   const handlePageChange = (currentPage: string) => {
     if (typeof window !== "undefined") {
       queryParams = new URLSearchParams(window.location.search);

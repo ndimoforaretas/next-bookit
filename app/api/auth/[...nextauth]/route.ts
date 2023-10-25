@@ -44,9 +44,6 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
     ],
     callbacks: {
       jwt: async ({ token, user }) => {
-        console.log("token", token);
-        console.log("user", user);
-
         user && (token.user = user);
 
         // TODO: update session when user is updated
@@ -55,7 +52,8 @@ async function auth(req: NextApiRequest, res: NextApiResponse) {
       session: async ({ session, token }) => {
         session.user = token.user as IUser;
 
-        console.log("session", session);
+        //@ts-ignore
+        delete session?.user?.password;
 
         return session;
       },
