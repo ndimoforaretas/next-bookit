@@ -2,7 +2,6 @@
 
 import { setIsAuthenticated, setUser } from "@/redux/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { log } from "console";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -10,8 +9,6 @@ import React, { useEffect } from "react";
 const Header = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-
-  console.log("user", user);
 
   const { data } = useSession();
 
@@ -54,7 +51,7 @@ const Header = () => {
                   <img
                     src={
                       user?.avatar
-                        ? user.avatar.url
+                        ? user?.avatar?.url
                         : "/images/default_avatar.jpg"
                     }
                     alt="User Avatar"
