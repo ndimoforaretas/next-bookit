@@ -21,7 +21,7 @@ const UserSidebar = () => {
       id: 3,
       name: "Update Password",
       icon: "fa fa-lock",
-      url: "/update_password",
+      url: "/me/update_password",
     },
   ];
 
