@@ -14,10 +14,15 @@ const upload_file = (
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(
       file,
-      { folder: folder, resource_type: "auto" },
-      (err, result: any) => {
-        if (err) return reject(err);
-        resolve({ public_id: result.public_id, url: result.url });
+      {
+        resource_type: "auto",
+        folder: folder,
+      },
+      (error, result: any) => {
+        resolve({
+          public_id: result.public_id,
+          url: result.url,
+        });
       }
     );
   });
