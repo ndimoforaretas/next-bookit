@@ -23,6 +23,11 @@ export const catchAsyncErrors =
         error.statusCode = 400;
       }
 
+      if (error?.code === 11000) {
+        error.message = `Duplicate ${Object.keys(error.keyValue)} entered`;
+        error.statusCode = 400;
+      }
+
       return NextResponse.json(
         {
           errMessage: error.message,
