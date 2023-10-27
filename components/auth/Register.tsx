@@ -1,8 +1,8 @@
 "use client";
 
-import { useRegisterMutation } from "@/redux/api/authAPI";
+import { useRegisterMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
-import { ChangeEventHandler, FormEvent, use, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ButtonLoader from "../layout/ButtonLoader";
 
@@ -20,7 +20,7 @@ const Register = () => {
 
   useEffect(() => {
     if (error && "data" in error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.errMessage);
     }
 
     if (isSuccess) {
