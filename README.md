@@ -11,3 +11,4 @@
 - React Pagination (https://www.npmjs.com/package/react-js-pagination): To create pagination
 - Bcrypt (https://www.npmjs.com/package/bcryptjs): To hash passwords
 - Redux toolkit (https://redux-toolkit.js.org/): To manage state
+- Cloudinary (https://cloudinary.com/): To store images
