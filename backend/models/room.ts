@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import geoCoder from "../utils/geoCoder";
 
 export interface IImage extends Document {
   public_id: string;
@@ -166,6 +167,23 @@ const roomSchema: Schema<IRoom> = new Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// setting up location
+
+roomSchema.pre<IRoom>("save", async function (next) {
+  const address = this.address;
+  const loc = await geoCoder.geocode(address);
+
+  this.location = {
+    type: "Point",
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    city: loc[0].city,
+    state: loc[0].stateCode,
+    zipcode: loc[0].zipcode,
+    country: loc[0].countryCode,
+  };
 });
 
 export default mongoose.models.Room ||
