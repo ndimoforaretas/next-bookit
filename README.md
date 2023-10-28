@@ -16,3 +16,5 @@
 - Mapquest (https://developer.mapquest.com/): To get geocoding data
 - Node Geocoder (https://www.npmjs.com/package/node-geocoder): To get geocoding data
 - Mapbox (https://www.mapbox.com/): To create map
+- React datepicker (https://www.npmjs.com/package/react-datepicker): To create datepicker
+- MomentJS (https://momentjs.com/): To format dates

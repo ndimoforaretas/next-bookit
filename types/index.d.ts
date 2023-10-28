@@ -4,3 +4,4 @@ declare module "bcryptjs";
 declare module "nodemailer";
 declare module "node-geocoder";
 declare module "mapbox-gl/dist/mapbox-gl.js";
+declare module "react-datepicker";
