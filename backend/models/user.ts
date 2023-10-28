@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 export interface IUser extends Document {
   name: string;
@@ -20,17 +21,11 @@ const userSchema: Schema<IUser> = new Schema({
   name: {
     type: String,
     required: [true, "Please enter your name"],
-    //maxLength: [30, "Your name cannot exceed 30 characters"],
   },
   email: {
     type: String,
     required: [true, "Please enter your email"],
     unique: true,
-    //   match: [
-    //     // eslint-disable-next-line no-useless-escape
-    //     /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-    //     "Please enter a valid email address",
-    //   ],
   },
   password: {
     type: String,
@@ -41,14 +36,6 @@ const userSchema: Schema<IUser> = new Schema({
   avatar: {
     public_id: String,
     url: String,
-    //   public_id: {
-    //     type: String,
-    //     required: true,
-    //   },
-    //   url: {
-    //     type: String,
-    //     required: true,
-    //   },
   },
   role: {
     type: String,
@@ -76,6 +63,23 @@ userSchema.methods.comparePassword = async function (
   enteredPassword: string
 ): Promise<boolean> {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Generate password reset token
+userSchema.methods.getResetPasswordToken = function (): string {
+  // Generate token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  // Hash and set to resetPasswordToken field
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Set token expire time
+  this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+
+  return resetToken;
 };
 
 export default mongoose.models.User ||
