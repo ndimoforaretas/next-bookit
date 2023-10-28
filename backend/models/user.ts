@@ -14,7 +14,8 @@ export interface IUser extends Document {
   createdAt: Date;
   resetPasswordToken: string;
   resetPasswordExpire: Date;
-  comparePassword: (enteredPassword: string) => Promise<boolean>;
+  comparePassword(enteredPassword: string): Promise<boolean>;
+  getResetPasswordToken(): string;
 }
 
 const userSchema: Schema<IUser> = new Schema({

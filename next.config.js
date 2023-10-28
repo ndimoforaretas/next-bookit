@@ -10,7 +10,7 @@ const nextConfig = {
     CLOUDINARY_API_SECRET: "6Kw9dFko6aUXpdsVnuL4i-W1iGM",
 
     SMTP_HOST: "sandbox.smtp.mailtrap.io",
-    SMTP_PORT: 2525,
+    SMTP_PORT: "2525",
     SMTP_USER: "ba81772c4bc608",
     SMTP_PASSWORD: "a5dd9f98b27a2e",
     SMTP_FROM_EMAIL: "noreply@bookit.com",
