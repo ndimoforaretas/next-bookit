@@ -13,3 +13,5 @@
 - Redux toolkit (https://redux-toolkit.js.org/): To manage state
 - Cloudinary (https://cloudinary.com/): To store images
 - Mailtrap (https://mailtrap.io/): To test emails
+- Mapquest (https://developer.mapquest.com/): To get geocoding data
+- Node Geocoder (https://www.npmjs.com/package/node-geocoder): To get geocoding data
