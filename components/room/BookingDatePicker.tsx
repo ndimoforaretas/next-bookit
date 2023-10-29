@@ -1,7 +1,10 @@
 "use client";
 import { IRoom } from "@/backend/models/room";
 import { calculateDaysOfStay } from "@/helpers/helpers";
-import { useNewBookingMutation } from "@/redux/api/bookingApi";
+import {
+  useLazyCheckBookingAvailiabilityQuery,
+  useNewBookingMutation,
+} from "@/redux/api/bookingApi";
 import { set } from "mongoose";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -17,6 +20,10 @@ const BookingDatePicker = ({ room }: Props) => {
   const [daysOfStay, setDaysOfStay] = useState(0);
 
   const [newBooking, { isLoading, isError, error }] = useNewBookingMutation();
+  const [checkBookingAvailability, { data }] =
+    useLazyCheckBookingAvailiabilityQuery();
+
+  const isAvailable = data?.isAvailable;
 
   const onChange = (dates: Date[]) => {
     const [checkInDate, checkOutDate] = dates;
@@ -28,6 +35,13 @@ const BookingDatePicker = ({ room }: Props) => {
       const days = calculateDaysOfStay(checkInDate, checkOutDate);
 
       setDaysOfStay(days);
+
+      // Check Booking Availiability
+      checkBookingAvailability({
+        id: room?._id,
+        checkInDate: checkInDate.toISOString(),
+        checkOutDate: checkOutDate.toISOString(),
+      });
     }
   };
 
@@ -68,9 +82,18 @@ const BookingDatePicker = ({ room }: Props) => {
         inline
       />
 
-      <button
-        className="btn btn-block py-3 booking-btn mt-4"
-        onClick={bookRoom}>
+      {isAvailable && (
+        <div className="alert alert-success my-3 font-weight-bold">
+          Room is available. Book now.
+        </div>
+      )}
+
+      {!isAvailable && (
+        <div className="alert alert-danger my-3 font-weight-bold">
+          Room not available. Try different dates.
+        </div>
+      )}
+      <button className="btn  py-3 form-btn w-100" onClick={bookRoom}>
         Pay and Book
       </button>
     </div>
