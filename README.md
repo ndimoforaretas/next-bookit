@@ -18,3 +18,4 @@
 - Mapbox (https://www.mapbox.com/): To create map
 - React datepicker (https://www.npmjs.com/package/react-datepicker): To create datepicker
 - MomentJS (https://momentjs.com/): To format dates
+- MDB React (https://mdbootstrap.com/docs/react/): To create components to display data in tables like Bookings and Reviews

@@ -3,6 +3,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import Booking, { IBooking } from "../models/booking";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
+import ErrorHandler from "../utils/errorHandler";
 
 const moment = extendMoment(Moment);
 
@@ -91,3 +92,31 @@ export const getRoomBookedDates = catchAsyncErrors(async (req: NextRequest) => {
     bookedDates,
   });
 });
+
+// Get currently logged in user bookings   =>   /api/bookings/me
+export const myBookings = catchAsyncErrors(async (req: NextRequest) => {
+  const bookings = await Booking.find({ user: req.user._id });
+
+  return NextResponse.json({
+    bookings,
+  });
+});
+
+// Get booking details   =>   /api/bookings/:id
+// Get currently logged in user bookings   =>   /api/bookings/me
+export const getBookingDetails = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+    const booking = await Booking.findById(params.id);
+
+    if (booking.user !== req.user._id) {
+      throw new ErrorHandler(
+        403,
+        "You are not allowed to access this booking!"
+      );
+    }
+
+    return NextResponse.json({
+      booking,
+    });
+  }
+);
