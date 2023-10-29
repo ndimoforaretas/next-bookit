@@ -106,9 +106,9 @@ export const myBookings = catchAsyncErrors(async (req: NextRequest) => {
 // Get currently logged in user bookings   =>   /api/bookings/me
 export const getBookingDetails = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const booking = await Booking.findById(params.id);
+    const booking = await Booking.findById(params.id).populate("user room");
 
-    if (booking.user !== req.user._id) {
+    if (booking.user?._id?.toString() !== req.user._id) {
       throw new ErrorHandler(
         403,
         "You are not allowed to access this booking!"
