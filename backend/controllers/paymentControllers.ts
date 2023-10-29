@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import Room from "../models/room";
-import Stripe from "stripe";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // Generate stripe checkout session => /api/payment/checkout_session/:roomId
-
-const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
 export const stripeCheckoutSession = catchAsyncErrors(
   async (
@@ -31,7 +29,7 @@ export const stripeCheckoutSession = catchAsyncErrors(
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       success_url: `${process.env.API_URL}/bookings/me`,
-      cancel_url: `${process.env.API_URL}/room/${room._id}`,
+      cancel_url: `${process.env.API_URL}/room/${room?._id}`,
       customer_email: req.user.email,
       client_reference_id: params?.id,
       metadata: {
