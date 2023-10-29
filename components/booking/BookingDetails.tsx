@@ -1,3 +1,5 @@
+"use client";
+
 import { IBooking } from "@/backend/models/booking";
 import Image from "next/image";
 import Link from "next/link";

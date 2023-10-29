@@ -37,7 +37,7 @@ const RoomDetails = ({ data }: Props) => {
         .setLngLat(coordinates)
         .addTo(map);
     };
-    setMap();
+    if (room?.location) setMap();
   }, []);
 
   return (
