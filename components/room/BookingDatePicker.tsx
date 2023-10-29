@@ -2,10 +2,11 @@
 import { IRoom } from "@/backend/models/room";
 import { calculateDaysOfStay } from "@/helpers/helpers";
 import {
+  useGetBookedDatesQuery,
   useLazyCheckBookingAvailiabilityQuery,
   useNewBookingMutation,
 } from "@/redux/api/bookingApi";
-import { set } from "mongoose";
+
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
@@ -19,11 +20,16 @@ const BookingDatePicker = ({ room }: Props) => {
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [daysOfStay, setDaysOfStay] = useState(0);
 
-  const [newBooking, { isLoading, isError, error }] = useNewBookingMutation();
+  const [newBooking] = useNewBookingMutation();
   const [checkBookingAvailability, { data }] =
     useLazyCheckBookingAvailiabilityQuery();
 
   const isAvailable = data?.isAvailable;
+  const { data: { bookedDates: dates } = {} } = useGetBookedDatesQuery(
+    room?._id
+  );
+
+  const excludeDates = dates?.map((date: string) => new Date(date)) || [];
 
   const onChange = (dates: Date[]) => {
     const [checkInDate, checkOutDate] = dates;
@@ -78,17 +84,18 @@ const BookingDatePicker = ({ room }: Props) => {
         minDate={new Date()}
         startDate={checkInDate}
         endDate={checkOutDate}
+        excludeDates={excludeDates}
         selectsRange
         inline
       />
 
-      {isAvailable && (
+      {isAvailable === true && (
         <div className="alert alert-success my-3 font-weight-bold">
           Room is available. Book now.
         </div>
       )}
 
-      {!isAvailable && (
+      {isAvailable === false && (
         <div className="alert alert-danger my-3 font-weight-bold">
           Room not available. Try different dates.
         </div>

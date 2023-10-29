@@ -1,6 +1,6 @@
 import dbConnect from "@/backend/config/dbConnect";
-import { newBooking } from "@/backend/controllers/bookingController";
-import { isAuthenticatedUser } from "@/backend/middlewares/auth";
+import { getRoomBookedDates } from "@/backend/controllers/bookingController";
+
 import { createEdgeRouter } from "next-connect";
 import { NextRequest } from "next/server";
 
@@ -10,8 +10,8 @@ const router = createEdgeRouter<NextRequest, RequestContext>();
 
 dbConnect();
 
-router.use(isAuthenticatedUser).post(newBooking);
+router.get(getRoomBookedDates);
 
-export async function POST(request: NextRequest, ctx: RequestContext) {
+export async function GET(request: NextRequest, ctx: RequestContext) {
   return router.run(request, ctx);
 }

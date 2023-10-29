@@ -1,4 +1,3 @@
-// import createEdgeRouter from next-connect;
 import dbConnect from "@/backend/config/dbConnect";
 import { checkRoomBookingAvailability } from "@/backend/controllers/bookingController";
 
