@@ -3,6 +3,7 @@ import Room, { IReview, IRoom } from "../models/room";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import ErrorHandler from "../utils/errorHandler";
 import APIFilters from "../utils/apiFilters";
+import Booking from "../models/booking";
 
 // Gets all rooms   =>   /api/rooms
 export const getAllRooms = catchAsyncErrors(async (req: NextRequest) => {
@@ -49,7 +50,7 @@ export const createARoom = catchAsyncErrors(async (req: NextRequest) => {
 
 export const getARoom = catchAsyncErrors(
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const room = await Room.findById(params.id);
+    const room = await Room.findById(params.id).populate("reviews.user");
 
     if (!room) {
       throw new ErrorHandler(404, "Room not found");
@@ -141,5 +142,19 @@ export const createRoomReview = catchAsyncErrors(async (req: NextRequest) => {
 
   return NextResponse.json({
     success: true,
+  });
+});
+
+// Can user review room  =>  /api/reviews/can_review
+export const canReview = catchAsyncErrors(async (req: NextRequest) => {
+  const { searchParams } = new URL(req.url);
+  const roomId = searchParams.get("roomId");
+
+  const bookings = await Booking.find({ user: req.user._id, room: roomId });
+
+  const canReview = bookings?.length > 0 ? true : false;
+
+  return NextResponse.json({
+    canReview,
   });
 });

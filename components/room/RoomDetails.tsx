@@ -84,7 +84,7 @@ const RoomDetails = ({ data }: Props) => {
       </div>
 
       <NewReview roomId={room?._id} />
-      <ListReview />
+      <ListReview reviews={room?.reviews} />
     </div>
   );
 };

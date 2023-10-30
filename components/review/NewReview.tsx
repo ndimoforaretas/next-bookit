@@ -1,6 +1,9 @@
 "use client";
 
-import { usePostReviewMutation } from "@/redux/api/roomApi";
+import {
+  useCanUserReviewQuery,
+  usePostReviewMutation,
+} from "@/redux/api/roomApi";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -11,6 +14,7 @@ const NewReview = ({ roomId }: { roomId: string }) => {
   const [comment, setComment] = useState("");
 
   const router = useRouter();
+  const { data: { canReview } = {} } = useCanUserReviewQuery(roomId);
 
   const [postReview, { error, isSuccess }] = usePostReviewMutation();
 
@@ -35,13 +39,15 @@ const NewReview = ({ roomId }: { roomId: string }) => {
 
   return (
     <>
-      <button
-        type="button"
-        className="btn form-btn mt-4 mb-5"
-        data-bs-toggle="modal"
-        data-bs-target="#ratingModal">
-        Submit Your Review
-      </button>
+      {canReview && (
+        <button
+          type="button"
+          className="btn form-btn mt-4 mb-5"
+          data-bs-toggle="modal"
+          data-bs-target="#ratingModal">
+          Submit Your Review
+        </button>
+      )}
 
       <div
         className="modal fade"
