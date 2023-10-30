@@ -7,3 +7,4 @@ declare module "mapbox-gl/dist/mapbox-gl.js";
 declare module "react-datepicker";
 declare module "moment";
 declare module "moment-range";
+declare module "stripe";
