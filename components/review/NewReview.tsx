@@ -1,4 +1,38 @@
-const NewReview = () => {
+"use client";
+
+import { usePostReviewMutation } from "@/redux/api/roomApi";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import StarRatings from "react-star-ratings";
+
+const NewReview = ({ roomId }: { roomId: string }) => {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
+  const router = useRouter();
+
+  const [postReview, { error, isSuccess }] = usePostReviewMutation();
+
+  useEffect(() => {
+    if (error && "data" in error) {
+      toast.error(error?.data?.errMessage);
+    }
+    if (isSuccess) {
+      toast.success("Review Submitted");
+      router.refresh();
+    }
+  }, [isSuccess, error]);
+
+  const submitHandler = () => {
+    const reviewData = {
+      rating,
+      comment,
+      roomId,
+    };
+    postReview(reviewData);
+  };
+
   return (
     <>
       <button
@@ -16,7 +50,7 @@ const NewReview = () => {
         role="dialog"
         aria-labelledby="ratingModalLabel"
         aria-hidden="true">
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="ratingModalLabel">
@@ -29,18 +63,31 @@ const NewReview = () => {
                 aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-                consectetur, mi nec tristique vehicula, elit tellus vulputate
-                ex, nec bibendum libero elit at orci.
-              </p>
+              <StarRatings
+                rating={rating}
+                starRatedColor="#e61e4d"
+                numberOfStars={5}
+                name="rating"
+                changeRating={(value: any) => setRating(value)}
+              />
+              <div className="form-floating">
+                <textarea
+                  id="review_field"
+                  className="form-control mt-4"
+                  placeholder="Leave your review"
+                  style={{ height: "100px" }}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}></textarea>
+                <label htmlFor="review_field">Your Review</label>
+              </div>
             </div>
             <div className="modal-footer">
               <button
                 type="button"
                 className="btn my-3 form-btn w-100"
                 data-bs-dismiss="modal"
-                aria-label="Close">
+                aria-label="Close"
+                onClick={submitHandler}>
                 Submit
               </button>
             </div>

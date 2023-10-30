@@ -83,7 +83,7 @@ const RoomDetails = ({ data }: Props) => {
         </div>
       </div>
 
-      <NewReview />
+      <NewReview roomId={room?._id} />
       <ListReview />
     </div>
   );
