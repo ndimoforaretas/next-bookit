@@ -22,3 +22,4 @@
 - [HTML2Canvas](https://www.npmjs.com/package/html2canvas): To create screenshots of the booking details
 - [JSPDF](https://www.npmjs.com/package/jspdf): To create PDF of the booking details
 - [Stripe NodeJS](https://www.npmjs.com/package/stripe): To create payment intent and process payments
+- [React ChartJS 2](https://www.npmjs.com/package/react-chartjs-2): To create charts
