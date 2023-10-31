@@ -38,6 +38,8 @@ export const getAllRooms = catchAsyncErrors(async (req: NextRequest) => {
 export const createARoom = catchAsyncErrors(async (req: NextRequest) => {
   const body = await req.json();
 
+  body.user = req.user._id;
+
   const room = await Room.create(body);
 
   return NextResponse.json({
@@ -156,5 +158,14 @@ export const canReview = catchAsyncErrors(async (req: NextRequest) => {
 
   return NextResponse.json({
     canReview,
+  });
+});
+
+// Get all rooms - ADMIN  =>  /api/admin/rooms
+export const allAdminRooms = catchAsyncErrors(async (req: NextRequest) => {
+  const rooms = await Room.find();
+
+  return NextResponse.json({
+    rooms,
   });
 });

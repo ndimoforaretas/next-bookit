@@ -45,7 +45,8 @@ const RoomItem = ({ room }: Props) => {
                 name="rating"
               />
               <span className="no-of-reviews">
-                ({room?.numOfReviews} Reviews)
+                ({room?.numOfReviews}
+                {room?.numOfReviews === 1 ? " Review" : " Reviews"})
               </span>
             </div>
             <Link
