@@ -37,6 +37,14 @@ export const bookingApi = createApi({
         },
       }),
     }),
+
+    getSalesStats: builder.query({
+      query({ startDate, endDate }) {
+        return {
+          url: `/admin/sales_stats?startDate=${startDate}&endDate=${endDate}`,
+        };
+      },
+    }),
   }),
 });
 
@@ -45,4 +53,5 @@ export const {
   useLazyCheckBookingAvailiabilityQuery,
   useGetBookedDatesQuery,
   useLazyStripeCheckoutQuery,
+  useLazyGetSalesStatsQuery,
 } = bookingApi;

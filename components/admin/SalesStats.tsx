@@ -1,3 +1,5 @@
+import { addCommasToAmount } from "@/helpers/helpers";
+
 interface Props {
   data: {
     totalSales: string;
@@ -5,7 +7,7 @@ interface Props {
   };
 }
 
-const SalesStats = () => {
+const SalesStats = ({ data }: Props) => {
   return (
     <div className="row my-5">
       <div className="col-12 col-lg-6">
@@ -20,7 +22,7 @@ const SalesStats = () => {
               <div className="col-10">
                 <p className="card-title">Sales</p>
                 <p className="h4">
-                  {/* <b>{data && addCommasToAmount(data?.totalSales)}</b> */}
+                  <b>{data && addCommasToAmount(data?.totalSales)}</b>
                 </p>
               </div>
             </div>
@@ -38,7 +40,9 @@ const SalesStats = () => {
               </div>
               <div className="col-10">
                 <p className="card-title">Bookings</p>
-                <p className="h4">{/* <b>{data?.numberOfBookings}</b> */}</p>
+                <p className="h4">
+                  <b>{data?.numberOfBookings}</b>
+                </p>
               </div>
             </div>
           </div>
