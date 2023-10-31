@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import Room, { IReview, IRoom } from "../models/room";
+import Room, { IImage, IReview, IRoom } from "../models/room";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import ErrorHandler from "../utils/errorHandler";
 import APIFilters from "../utils/apiFilters";
 import Booking from "../models/booking";
+import { delete_file, upload_file } from "../utils/cloudinary";
 
 // Gets all rooms   =>   /api/rooms
 export const getAllRooms = catchAsyncErrors(async (req: NextRequest) => {
@@ -78,6 +79,59 @@ export const updateARoom = catchAsyncErrors(
     room = await Room.findByIdAndUpdate(params.id, body, {
       new: true,
     });
+
+    return NextResponse.json({
+      success: true,
+      room,
+    });
+  }
+);
+
+// Upload room images  =>  /api/admin/rooms/:id/upload_images
+export const uploadRoomImages = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+    const room = await Room.findById(params.id);
+    const body = await req.json();
+
+    if (!room) {
+      throw new ErrorHandler(404, "Room not found");
+    }
+
+    const uploader = async (image: string) =>
+      upload_file(image, "bookit/rooms");
+
+    const urls = await Promise.all((body?.images).map(uploader));
+
+    room?.images?.push(...urls);
+
+    await room.save();
+
+    return NextResponse.json({
+      success: true,
+      room,
+    });
+  }
+);
+
+// Delete room image  =>  /api/admin/rooms/:id/delete_image
+export const deleteRoomImage = catchAsyncErrors(
+  async (req: NextRequest, { params }: { params: { id: string } }) => {
+    const room = await Room.findById(params.id);
+    const body = await req.json();
+
+    if (!room) {
+      throw new ErrorHandler(404, "Room not found");
+    }
+
+    const isDeleted = await delete_file(body?.imgId);
+
+    if (isDeleted) {
+      room.images = room?.images.filter(
+        (img: IImage) => img.public_id !== body.imgId
+      );
+    }
+
+    await room.save();
 
     return NextResponse.json({
       success: true,
