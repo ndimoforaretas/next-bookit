@@ -170,6 +170,56 @@ const getLastSixMonthsSales = async () => {
   return last6MonthsSales;
 };
 
+const getTopPerformingRooms = async (startDate: Date, endDate: Date) => {
+  const topRooms = await Booking.aggregate([
+    // Stage 1: Filter documents within start and end date
+    {
+      $match: {
+        createdAt: { $gte: startDate, $lte: endDate },
+      },
+    },
+    // Stage 2: Group documents by room
+    {
+      $group: {
+        _id: "$room",
+        bookingsCount: { $sum: 1 },
+      },
+    },
+
+    // Stage 3: Sort documents by bookingsCount in descending order
+    {
+      $sort: { bookingsCount: -1 },
+    },
+    // Stage 4: Limit the documents
+    {
+      $limit: 3,
+    },
+    // Stage 5: Retrieve additional data from rooms collection like room name
+    {
+      $lookup: {
+        from: "rooms",
+        localField: "_id",
+        foreignField: "_id",
+        as: "roomData",
+      },
+    },
+    // Stage 6: Takes roomData and deconstructs into documents
+    {
+      $unwind: "$roomData",
+    },
+    // Stage 7: Shape the output document (include or exclude the fields)
+    {
+      $project: {
+        _id: 0,
+        roomName: "$roomData.name",
+        bookingsCount: 1,
+      },
+    },
+  ]);
+
+  return topRooms;
+};
+
 // Get sales stats   =>  /api/admin/sales_stats
 export const getSalesStats = catchAsyncErrors(async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
@@ -190,12 +240,12 @@ export const getSalesStats = catchAsyncErrors(async (req: NextRequest) => {
   );
 
   const sixMonthSalesData = await getLastSixMonthsSales();
-  // const topRooms = await getTopPerformingRooms(startDate, endDate);
+  const topRooms = await getTopPerformingRooms(startDate, endDate);
 
   return NextResponse.json({
     numberOfBookings,
     totalSales,
     sixMonthSalesData,
-    // topRooms,
+    topRooms,
   });
 });
