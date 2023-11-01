@@ -150,6 +150,11 @@ export const deleteARoom = catchAsyncErrors(
       throw new ErrorHandler(404, "Room not found with this ID");
     }
 
+    // Delete images associated with the room
+    for (let i = 0; i < room?.images?.length; i++) {
+      await delete_file(room?.images[i].public_id);
+    }
+
     await room.deleteOne();
 
     return NextResponse.json({

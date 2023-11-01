@@ -1,7 +1,7 @@
 "use client";
 
 import { IRoom } from "@/backend/models/room";
-// import { useDeleteRoomMutation } from "@/redux/api/roomApi";
+import { useDeleteRoomMutation } from "@/redux/api/roomApi";
 import { MDBDataTable } from "mdbreact";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,18 +18,18 @@ const AllRooms = ({ data }: Props) => {
   const rooms = data?.rooms;
   const router = useRouter();
 
-  //   const [deleteRoom, { error, isSuccess }] = useDeleteRoomMutation();
+  const [deleteRoom, { error, isSuccess }] = useDeleteRoomMutation();
 
-  //   useEffect(() => {
-  //     if (error && "data" in error) {
-  //       toast.error(error?.data?.errMessage);
-  //     }
+  useEffect(() => {
+    if (error && "data" in error) {
+      toast.error(error?.data?.errMessage);
+    }
 
-  //     if (isSuccess) {
-  //       router.refresh();
-  //       toast.success("Room deleted");
-  //     }
-  //   }, [error, isSuccess]);
+    if (isSuccess) {
+      router.refresh();
+      toast.success("Room deleted");
+    }
+  }, [error, isSuccess]);
 
   const setRooms = () => {
     const data: { columns: any[]; rows: any[] } = {
@@ -86,7 +86,7 @@ const AllRooms = ({ data }: Props) => {
   };
 
   const deleteRoomHandler = (id: string) => {
-    // deleteRoom(id);
+    deleteRoom(id);
   };
 
   return (
