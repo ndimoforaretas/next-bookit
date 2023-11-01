@@ -54,7 +54,9 @@ const RoomDetails = ({ data }: Props) => {
           starSpacing="1px"
           name="rating"
         />
-        <span className="no-of-reviews fs-5">{room?.numOfReviews} Reviews</span>
+        <span className="no-of-reviews fs-5">
+          {room?.numOfReviews} {room?.numOfReviews > 1 ? "Reviews" : "Review"}
+        </span>
       </div>
 
       <RoomImageSlider images={room?.images} />
