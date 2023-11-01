@@ -52,9 +52,9 @@ const AdminSidebar = () => {
           key={index}
           href={item.url}
           className={`fw-bold list-group-item list-group-item-action ${
-            activeMenuItem === item.url ? "active" : ""
+            activeMenuItem.includes(item.url) ? "active" : ""
           }`}
-          aria-current={activeMenuItem === item.url ? "true" : "false"}
+          aria-current={activeMenuItem.includes(item.url) ? "true" : "false"}
           onClick={() => handleMenuItemClick(item.url)}>
           <i className={`${item.icon} menu-item-icon-1 fa-fw pe-2`}></i>{" "}
           {item.name}
