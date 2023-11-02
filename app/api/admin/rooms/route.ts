@@ -20,9 +20,9 @@ router.use(isAuthenticatedUser, authorizeRoles("admin")).get(allAdminRooms);
 router.use(isAuthenticatedUser, authorizeRoles("admin")).post(createARoom);
 
 export async function GET(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<Response>;
 }
 
 export async function POST(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<Response>;
 }

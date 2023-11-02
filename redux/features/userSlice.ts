@@ -5,7 +5,7 @@ interface IUserState {
   isAuthenticated: boolean;
 }
 
-const initialState = {
+const initialState: IUserState = {
   user: null,
   isAuthenticated: false,
 };
@@ -24,4 +24,5 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
 export const { setUser, setIsAuthenticated } = userSlice.actions;

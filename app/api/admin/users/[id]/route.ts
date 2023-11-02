@@ -27,14 +27,17 @@ router.get(getUserDetails);
 router.put(updateUser);
 router.delete(deleteUser);
 
-export async function GET(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+export async function GET(
+  request: NextRequest,
+  ctx: RequestContext
+): Promise<Response> {
+  return router.run(request, ctx) as Promise<Response>;
 }
 
 export async function PUT(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<Response>;
 }
 
 export async function DELETE(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<Response>;
 }

@@ -13,5 +13,5 @@ dbConnect();
 router.use(isAuthenticatedUser).put(createRoomReview);
 
 export async function PUT(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<Response>;
 }

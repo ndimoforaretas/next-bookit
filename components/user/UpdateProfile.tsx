@@ -10,9 +10,14 @@ import toast from "react-hot-toast";
 import ButtonLoader from "../layout/ButtonLoader";
 import { setUser } from "@/redux/features/userSlice";
 
+interface IUserState {
+  name: string;
+  email: string;
+}
+
 const UpdateProfile = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState<IUserState["name"]>("");
+  const [email, setEmail] = useState<IUserState["email"]>("");
 
   const router = useRouter();
   const dispatch = useAppDispatch();

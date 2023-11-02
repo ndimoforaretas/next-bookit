@@ -13,5 +13,5 @@ dbConnect();
 router.post(webhookCheckout);
 
 export async function POST(request: NextRequest, ctx: RequestContext) {
-  return router.run(request, ctx);
+  return router.run(request, ctx) as Promise<Response>;
 }
