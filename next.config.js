@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_URL: "https://bookit-next.vercel.app",
+    API_URL: "https://next-bookit-phi.vercel.app",
     DB_URI:
       "mongodb+srv://Bookaretas:Mama20papa@cluster0.2rzahmy.mongodb.net/bookit?retryWrites=true&w=majority",
 
@@ -27,7 +27,7 @@ const nextConfig = {
     MAPBOX_ACCESS_TOKEN:
       "pk.eyJ1IjoiYXJldGFzIiwiYSI6ImNsb2FhZzdnMTBmNnYycnBhempzZWYzejYifQ.gEJCuXWLq98Z_shOOEgkgw",
 
-    NEXTAUTH_URL: "https://bookit-next.vercel.app",
+    NEXTAUTH_URL: "https://next-bookit-phi.vercel.app",
     NEXTAUTH_SECRET: "ASDÖF2342962934098234OIJWDFOIJASDIUF0QWEROISADFOIJ",
     REVALIDATE_TOKEN: "AREALLYLONGSTRINGOFCHARACTERSTHATYOUSHOULDGENERATE",
   },
